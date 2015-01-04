@@ -1,0 +1,7 @@
+" not installed bundle
+NeoBundle 'Valloric/YouCompleteMe' #task
+" [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+NeoBundle 'bling/vim-airline' #task
+" [bling/vim-airline](https://github.com/bling/vim-airline)
+NeoBundle 'nathanaelkane/vim-indent-guides'
+" [【Vimプラグイン】vim-indent-guidesでインデントに色をつける | メモ帳代わりのブログ](http://www.absolute-keitarou.net/blog/?p=1127)

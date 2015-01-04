@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<root>
+  <item>
+    <name>LeaveInsMode with EISUU(Terminal)</name>
+    <identifier>private.app_terminal_esc_with_eisuu</identifier>
+    <only>TERMINAL</only>
+    <autogen>--KeyToKey-- KeyCode::ESCAPE,  KeyCode::ESCAPE, KeyCode::JIS_EISUU</autogen>
+    <autogen>--KeyToKey-- KeyCode::N, VK_OPTION, KeyCode::ESCAPE, KeyCode::JIS_EISUU</autogen>
+  </item>
+  <item>
+    <name>LeaveInsMode with EISUU(Terminal) with SimultaneousKeyPresses</name>
+    <identifier>private.app_terminal_esc_with_eisuu_simultaneouskeypresses</identifier>
+    <only>TERMINAL</only>
+    <autogen>--KeyToKey-- KeyCode::ESCAPE,  KeyCode::ESCAPE, KeyCode::JIS_EISUU</autogen>
+    <autogen>--KeyToKey-- KeyCode::N, VK_OPTION, KeyCode::ESCAPE, KeyCode::JIS_EISUU</autogen>
+    <autogen>
+      __SimultaneousKeyPresses__
+      KeyCode::J, KeyCode::K,
+      KeyCode::ESCAPE, KeyCode::JIS_EISUU,
+      Option::SIMULTANEOUSKEYPRESSES_RAW
+    </autogen>
+  </item>
+  <item>
+    <name>Toggle search field without ESC in WorkFlowy</name>
+    <identifier>private.app_workflowy_esc</identifier>
+    <autogen>--KeyToKey-- KeyCode::N, VK_OPTION, KeyCode::ESCAPE</autogen>
+  </item>
+  <item>
+    <name>Alfred2 Bug measure</name>
+    <identifier>alfred2.bug.measure</identifier>
+    <autogen>--KeyToKey-- KeyCode::JIS_BRACKET_RIGHT, VK_COMMAND, VK_OPTION, KeyCode::JIS_BRACKET_RIGHT, VK_COMMAND, VK_OPTION</autogen>
+  </item>
+</root>

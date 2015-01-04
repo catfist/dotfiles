@@ -1,0 +1,228 @@
+# Cask applications
+# Please copy these lines to your Brewfile and use with `brew file install`.
+
+# Main tap repository for brew-cask
+tap caskroom/cask
+install brew-cask
+
+# Apps installed by Cask in brew-cask
+
+# Apps installed directly instead of by Cask in brew-cask
+#cask install onepassword #/Applications/1Password 4.app
+#cask install accessmenubarapps #/Applications/AccessMenuBarApps.app
+#cask install alfred #/Applications/Alfred 2.app
+#cask install  #/Applications/Alfred.app
+#cask install appcleaner #/Applications/AppCleaner.app
+#cask install imagemin #/Applications/Atom.app
+#cask install bathyscaphe #/Applications/BathyScaphe.app
+#cask install bettertouchtool #/Applications/BetterTouchTool.app
+#cask install  #/Applications/Bitcasa.app
+#cask install brackets #/Applications/Brackets.app
+#cask install cheatsheet #/Applications/CheatSheet.app
+#cask install chocolat #/Applications/Chocolat.app
+#cask install clipmenu #/Applications/ClipMenu.app
+#cask install screencloud #/Applications/Cloud.app
+#cask install coteditor #/Applications/CotEditor.app
+#cask install couleurs #/Applications/Couleurs.app
+#cask install dash #/Applications/Dash.app
+#cask install dropbox #/Applications/Dropbox.app
+#cask install evernote #/Applications/Evernote.app
+#cask install multifirefox #/Applications/Firefox.app
+#cask install fluid #/Applications/Fluid.app
+#cask install the-escapers-flux #/Applications/Flux.app
+#cask install folding-text #/Applications/FoldingText.app
+#cask install forklift #/Applications/ForkLift.app
+#cask install freeplane #/Applications/Freeplane.app
+#cask install github #/Applications/GitHub.app
+#cask install gmail-notifr #/Applications/Gmail Notifr.app
+#cask install google-chrome #/Applications/Google Chrome.app
+#cask install google-drive #/Applications/Google Drive.app
+#cask install haroopad #/Applications/haroopad.app
+#cask install iterm2 #/Applications/iTerm.app
+#cask install jedit #/Applications/jEdit.app
+#cask install karabiner #/Applications/Karabiner.app
+#cask install kobito #/Applications/Kobito.app
+#cask install komodo-edit #/Applications/Komodo Edit 8.app
+#cask install kompozer #/Applications/KompoZer.app
+#cask install launchbar #/Applications/LaunchBar.app
+#cask install launchy #/Applications/Launchy.app
+#cask install licecap #/Applications/LICEcap.app
+#cask install lightpaper #/Applications/LightPaper.app
+#cask install macdown #/Applications/MacDown.app
+#cask install  #/Applications/Magican.app
+#cask install opera-mail #/Applications/Mail.app
+#cask install mailplane #/Applications/Mailplane 3.app
+#cask install marked #/Applications/Marked 2.app
+#cask install marsedit #/Applications/MarsEdit.app
+#cask install yabumi #/Applications/mi.app
+#cask install mou #/Applications/Mou.app
+#cask install mucommander #/Applications/muCommander.app
+#cask install notational-velocity #/Applications/Notational Velocity.app
+#cask install nottingham #/Applications/Nottingham.app
+#cask install nvalt #/Applications/nvALT.app
+#cask install onyx #/Applications/OnyX.app
+#cask install opera-mail #/Applications/Opera Mail.app
+#cask install whatsapp-pocket #/Applications/Pocket.app
+#cask install scapple #/Applications/Scapple.app
+#cask install scrivener #/Applications/Scrivener.app
+#cask install skitch #/Applications/Skitch.app
+#cask install skype #/Applications/Skype.app
+#cask install sourcetree #/Applications/SourceTree.app
+#cask install  #/Applications/Splashtop Streamer.app
+#cask install sublime-text #/Applications/Sublime Text 2.app
+#cask install  #/Applications/Sublime Text.app
+#cask install textexpander #/Applications/TextExpander.app
+#cask install textwrangler #/Applications/TextWrangler.app
+#cask install the-unarchiver #/Applications/The Unarchiver.app
+#cask install todoist #/Applications/Todoist.app
+#cask install todotxtmac #/Applications/TodoTxtMac.app
+#cask install toodledo #/Applications/Toodledo.app
+#cask install sourcetree #/Applications/Tree.app
+#cask install vico #/Applications/Vico.app
+#cask install vimr #/Applications/VimR.app
+#cask install whiskey #/Applications/Whiskey.app
+#cask install  #/Applications/XtraFinder.app
+#cask install yummy-ftp #/Applications/Yummy FTP.app
+#cask install serviio #/Applications/Utilities/Console.app
+#cask install tinygrab #/Applications/Utilities/Grab.app
+#cask install ap-grapher #/Applications/Utilities/Grapher.app
+#cask install gpgtools #/Applications/Utilities/Keychain Access.app
+#cask install xquartz #/Applications/Utilities/XQuartz.app
+
+# Apps installed but no casks are available
+#/Applications/Activity Timer - Pomodoro Edition.app
+#/Applications/Adobe Edge Code CC.app
+#/Applications/Airmail Beta.app
+#/Applications/AozoReader.app
+#/Applications/App Store.app
+#/Applications/AutoKeyboard.app
+#/Applications/Automator.app
+#/Applications/beitel.app
+#/Applications/BlogEasyBeta.app
+#/Applications/Blogo.app
+#/Applications/Byword.app
+#/Applications/Calculator.app
+#/Applications/Calendar.app
+#/Applications/Chess.app
+#/Applications/ClawMenu.app
+#/Applications/CLCL Lite.app
+#/Applications/Cloud Outliner.app
+#/Applications/CocoaCatX.app
+#/Applications/CodePad.app
+#/Applications/Color Picker.app
+#/Applications/Contacts.app
+#/Applications/Dashboard.app
+#/Applications/DevBox.app
+#/Applications/Dictionary.app
+#/Applications/Doit.im.app
+#/Applications/DoodleToDo.app
+#/Applications/Draft2Public.app
+#/Applications/DVD Player.app
+#/Applications/Epochulator.app
+#/Applications/FaceTime.app
+#/Applications/feedly.app
+#/Applications/FileDelete.app
+#/Applications/Font Book.app
+#/Applications/Fraise.app
+#/Applications/Game Center.app
+#/Applications/Gifted.app
+#/Applications/GraffitiPot.app
+#/Applications/GraphicalHttpClient.app
+#/Applications/Hagoromoβ.app
+#/Applications/iA Writer.app
+#/Applications/iBooks Author.app
+#/Applications/iBooks.app
+#/Applications/iDropCopy.app
+#/Applications/iGif Maker.app
+#/Applications/Image Capture.app
+#/Applications/Inkpod.app
+#/Applications/iText Express.app
+#/Applications/iTunes.app
+#/Applications/Kindle.app
+#/Applications/KoalaWriter.app
+#/Applications/Launchpad.app
+#/Applications/Leafnote.app
+#/Applications/Lenote.app
+#/Applications/Maps.app
+#/Applications/Marboo.app
+#/Applications/MarkdownLife.app
+#/Applications/Marko.app
+#/Applications/MemoryBooster.app
+#/Applications/MenuPop.app
+#/Applications/Messages.app
+#/Applications/Microsoft OneNote.app
+#/Applications/Mission Control.app
+#/Applications/Monosnap.app
+#/Applications/Notes.app
+#/Applications/NovaMind5.app
+#/Applications/Oak -Plain text outliner.app
+#/Applications/OlivineEditor.app
+#/Applications/OptimPrefs.app
+#/Applications/PerfectMind.app
+#/Applications/Photo Booth.app
+#/Applications/PopClip.app
+#/Applications/PopMaker.app
+#/Applications/Preview.app
+#/Applications/Prototypr.app
+#/Applications/Punch.app
+#/Applications/Quick Note.app
+#/Applications/QuickTime Player.app
+#/Applications/Qumana.app
+#/Applications/Reminders.app
+#/Applications/RoboRam.app
+#/Applications/Safari.app
+#/Applications/Screeny.app
+#/Applications/Simplenote.app
+#/Applications/Smart Memory.app
+#/Applications/Smultron 6.app
+#/Applications/Softmatic QR Perfect.app
+#/Applications/SplashID Safe.app
+#/Applications/SplashShopper.app
+#/Applications/SpotFiles.app
+#/Applications/Stickies.app
+#/Applications/Storyist.app
+#/Applications/StoryMill.app
+#/Applications/Sunrise.app
+#/Applications/System Preferences.app
+#/Applications/TaskBadges.app
+#/Applications/tateditor.app
+#/Applications/TEIMPrefSetter.app
+#/Applications/TextEdit.app
+#/Applications/Time Machine.app
+#/Applications/Todour.app
+#/Applications/Tomato Ticker - The Pomodoro Timer.app
+#/Applications/Toodledo Fluid.app
+#/Applications/Total Manager.app
+#/Applications/Twitter Scripter.app
+#/Applications/Twitter.app
+#/Applications/uFocus.app
+#/Applications/Ulysses.app
+#/Applications/Webshot.app
+#/Applications/Wi2 Connect.app
+#/Applications/Window Magnet.app
+#/Applications/WorkFlowy_Fluid.app
+#/Applications/wri.pe.app
+#/Applications/Write.app
+#/Applications/Writedown!.app
+#/Applications/Wunderlist.app
+#/Applications/XClean.app
+#/Applications/Xcode.app
+#/Applications/xLine.app
+#/Applications/Utilities/Activity Monitor.app
+#/Applications/Utilities/Adobe AIR Application Installer.app
+#/Applications/Utilities/Adobe AIR Uninstaller.app
+#/Applications/Utilities/Adobe Flash Player Install Manager.app
+#/Applications/Utilities/AirPort Utility.app
+#/Applications/Utilities/AppleScript Editor.app
+#/Applications/Utilities/Audio MIDI Setup.app
+#/Applications/Utilities/Bluetooth File Exchange.app
+#/Applications/Utilities/Boot Camp Assistant.app
+#/Applications/Utilities/ColorSync Utility.app
+#/Applications/Utilities/DigitalColor Meter.app
+#/Applications/Utilities/Disk Utility.app
+#/Applications/Utilities/ELECOM_Mouse_Util.app
+#/Applications/Utilities/ELECOM_Uninstall.app
+#/Applications/Utilities/Migration Assistant.app
+#/Applications/Utilities/System Information.app
+#/Applications/Utilities/Terminal.app
+#/Applications/Utilities/VoiceOver Utility.app

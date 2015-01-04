@@ -1,0 +1,21 @@
+[core]
+	excludesfile = /Users/user/.gitignore_global
+	precomposeunicode = true
+	quotepath = false
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[user]
+	name = catfist
+  email = catfist.m@gmail.com
+[push]
+	default = simple
+[ghq]
+  root = ~/ghq
