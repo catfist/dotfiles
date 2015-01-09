@@ -677,8 +677,9 @@ relayhost = smtp.gmail.com:587
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:/etc/postfix/gmail_passwd
 smtp_sasl_security_options = noanonymous
-# tls_random_source = dev:/dev/urandom
+smtp_sasl_mechanism_filter = plain
 
 # TLS Settings
 smtp_use_tls = yes
 smtp_tls_security_level = encrypt
+tls_random_source = dev:/dev/urandom
