@@ -54,30 +54,31 @@ gpush () {
     git add -A
     git commit -m "$1"
   fi
-  git push && echo 'display notification "done push" with title "git"' | osascript || echo 'display notification "error" with title "git"' | osascript
+  git push && afternotice
 }
 gtag () {
   git add -A
   git commit -m "$2"
   git tag -a "$1" -m "$2"
 }
-bbinit () {
-  git init
-  git add -A
-  git commit -m 'initial commit'
-  git remote add origin "$1"
-  git push --set-upstream origin master
-}
-alwrelease () {
-  echo Input name of workflow
-  read ANSWER
-  Name="$ANSWER"
-  zip -r "$Name".alfredworkflow $(git ls-files)
-  echo Input Tag
-  read ANSWER
-  ghr "$ANSWER" "$Name".alfredworkflow
-}
 ## other
+alwrelease () {
+  if pwd | grep -q 'Alfred.alfredpreferences/workflows/';then
+    if [ -d .git ]; then
+      echo Input name of workflow
+      read Name
+      echo Input Tag
+      read Tag
+      if [ ! -n "$Name" -a -n "$Tag" ];then
+        zip -r "$Name.alfredworkflow" "$(git ls-files)"
+        ghr "$Tag" "$Name".alfredworkflow
+      else echo "No Workflow Name or Git Tag"
+      fi
+    else echo "Not a Git repository"
+    fi
+  else echo "Not a Alfred Workflow directory"
+  fi
+}
 notice () {
     if [ "$1" ];then
       text="$1"

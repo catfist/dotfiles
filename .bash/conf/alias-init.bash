@@ -26,15 +26,17 @@ alias vimrc='vim ~/.vimrc'
 alias vimbundle='vim ~/.vim/conf/bundle-init.vim'
 alias vimsetting='vim ~/.vim/conf/setting-init.vim'
 alias vimplugin='vim ~/.vim/conf/bundle-init-pluginlist.vim'
-# other
-alias exe='chmod +x'
-alias fc1='fc -ln|tail -n 1'
-alias fcc='fc -ln|tail -n 1|pbcopy'
-alias fcp='fc -ln|peco|pbcopy'
-alias afternotice="osascript -e 'display notification \"OK\" with title \"iTerm2\"' || osascript -e 'display notification \"NG\" with title \"iTerm2\"'; osascript -e 'tell application \"iterm\" to activate'"
+alias mvimrc='mvim ~/.vimrc'
+alias mvimbundle='mvim ~/.vim/conf/bundle-init.vim'
+alias mvimsetting='mvim ~/.vim/conf/setting-init.vim'
+alias mvimplugin='mvim ~/.vim/conf/bundle-init-pluginlist.vim'
+alias vimrrc='vimr ~/.vimrc'
+alias vimrbundle='vimr ~/.vim/conf/bundle-init.vim'
+alias vimrsetting='vimr ~/.vim/conf/setting-init.vim'
+alias vimrplugin='vimr ~/.vim/conf/bundle-init-pluginlist.vim'
 # peco
 alias lp='$(ls|peco)'
-alias ap='grep "^alias" $bash_conf/alias-init.bash|peco'
+alias ap='sed "s/^alias //g" $bash_conf/alias-init.bash|peco'
 # Git
 alias gco='git checkout'
 alias gb='git branch'
@@ -45,6 +47,12 @@ alias kreloadxml='/Applications/Karabiner.app/Contents/Library/bin/karabiner rel
 # Homebrew
 alias brewup='brew update && brew upgrade brew-cask && brew cleanup && brew cask cleanup && notice'
 alias brewdoctor='brew doctor && afternotice'
+# other
+alias exe='chmod +x'
+alias fc1='fc -ln|tail -n 1'
+alias fcc='fc -ln|tail -n 1|pbcopy'
+alias fcp='fc -ln|peco|pbcopy'
+alias afternotice="osascript -e 'display notification \"OK\" with title \"iTerm2\"' || osascript -e 'display notification \"NG\" with title \"iTerm2\"'; osascript -e 'tell application \"iterm\" to activate'"
 # Not arranged
 alias se='open -a "Script Editor"'
 alias allhistory='cat ~/.bash_history'

@@ -1,0 +1,8 @@
+[auth]
+username = catfist 
+password = catm7492
+
+[options]
+scm = git
+protocol = ssh
+
