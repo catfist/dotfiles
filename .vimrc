@@ -24,8 +24,9 @@ scriptencoding utf-8
 " Split vim config files
 let $MYVIMRC = $HOME . '/.vimrc'
 let $VIM_CONF = $HOME . '/.vim/conf'
-source $VIM_CONF/setting-init.vim " 各種設定
-source $VIM_CONF/bundle-init.vim " NeoBundleの設定
+source $VIM_CONF/setting-init.vim
+source $VIM_CONF/bundle-init.vim
+source $VIM_CONF/quickrun-init.vim
 " source $VIM_CONF/unite-init.vim  " Uniteの設定
 
 " auto reload .vimrc

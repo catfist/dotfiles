@@ -2,32 +2,31 @@
 # Shell Functions
 ## sample
 hw () {
-  OPTIND_OLD=$OPTIND
+  OPTIND_OLD="$OPTIND"
   OPTIND=1
   usage_exit() {
-    echo "Usage: $0 [-a] [-d dir] item ..." 1>&2
+    echo "Usage: hw [-a] [-p text]"
   }
-
-  while getopts ad:h OPT
+  while getopts ap:h OPT
   do
     case $OPT in
       a)  FLAG_A=1
         ;;
-      d)  VALUE_D=$OPTARG
+      p)  POSTFIX="$OPTARG"
         ;;
       h)  usage_exit
           return
         ;;
       \?) usage_exit
+          return
         ;;
     esac
   done
   shift $(($OPTIND - 1))
   OPTIND=$OPTIND_OLD
   echo Hollo World!
-  if [ "$1" ]
-  then
-    echo "$1"
+  if [ "$FLAG_A" = 1 ];then
+    pwd
   fi
 }
 ## git
@@ -130,7 +129,7 @@ mvup () {
 }
 # MyHexo2
 pub () {
-  PATH=$PATH:usr/local/bin
+  # PATH=$PATH:usr/local/bin
   gsed -i -e 's/status: d/status: p/' -e "s/^date: .*$/date: $(date '+%Y-%m-%d %H:%M')/" "$1" 
   title=$(grep -m1 'title:' "$1" | cut -c 8- | sed -e 's/ /-/g' -e 's/[\.\/]//g')
   mv "$1" ../_posts/$(date '+%Y-%m-%d')-"$title".md
@@ -181,7 +180,7 @@ esac
 }
 # ghq
 gp () {
-  dir=$(ghq list -p catfist/|grep "$(ghq root)/.*/catfist/.*$1.*"|peco)
+  dir=$(ghq list -p catfist/|grep -i "$(ghq root)/.*/catfist/.*$1.*"|peco)
   if [ "$dir" ]
     then
     cd "$dir"
@@ -201,7 +200,7 @@ gpa () {
   fi
 }
 fr () {
-  dir=$(ghq list -p "catfist/"|grep -m1 "$(ghq root)/.*/catfist/.*$1.*")
+  dir=$(ghq list -p "catfist/"|grep -im1 "$(ghq root)/.*/catfist/.*$1.*")
   if [ "$dir" ]
     then
       cd "$dir"
@@ -290,8 +289,12 @@ bbcreate () {
   git push -u origin --all
 }
 addalias () {
-echo "alias $1='$2'" >> ~/.bash/conf/alias-init.bash
-source ~/.bashrc
+  if [ -n "$1" -a -n "$2" ];then
+    echo "alias $1='$2'" | tee -a ~/.bash/conf/alias-init.bash
+    source ~/.bashrc
+  else
+    echo ERROR: Input Name & Alias
+  fi
 }
 addbundle () {
   if [ "$(pbpaste | grep 'NeoBundle '\''[0-9a-zA-Z]\+/[0-9a-zA-Z.-]\+'\''')"  ];then
@@ -299,5 +302,47 @@ addbundle () {
     echo "Added Bundle \"$(pbpaste)\""
   else
     vim -c $ ~/.vim/conf/bundle-init-pluginlist.vim
+  fi
+}
+fp () {
+  OPTIND_OLD="$OPTIND"
+  OPTIND=1
+  usage_exit() {
+    echo "Usage: fp [-eh]"
+  }
+  while getopts "eh" OPT
+  do
+    case $OPT in
+      e)
+        flag="$OPT"
+        ;;
+      h)  usage_exit
+          return
+        ;;
+      \?)  echo "unknown option"
+          usage_exit
+          return
+        ;;
+    esac
+  done
+  shift $(($OPTIND - 1))
+  OPTIND=$OPTIND_OLD
+  bash_function="$bash_conf/function-init.bash"
+  fname=$( grep '^[0-9a-zA-Z]\+ () {' "$bash_function" | sort | sed 's/ () {//' | peco )
+  if [ "$flag" = e ];then
+    vim "$bash_function" -c "/$fname" -c noh
+  else
+    type $fname
+  fi
+}
+hlnpwd () {
+  Host="$(ls $(ghq root)/|peco --prompt "Select Git Host:")"
+  echo "Input Project Name"
+  read Name
+  Dir="$(ghq root)/$Host/catfist/$Name"
+  if [ -d "$Dir" ];then
+    echo "ERROR: Dirctory is exsiting"
+  else
+    hln $(pwd) $Dir
   fi
 }

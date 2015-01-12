@@ -16,11 +16,12 @@ alias vimr='open -a vimr'
 ## bash
 alias bashprofile='vim ~/.bash_profile; source ~/.bash_profile'
 alias bashrc='vim ~/.bashrc; source ~/.bashrc'
-alias rcupdate='source ~/.bashrc'
-alias stbashrc='open -W -n -a "Sublime Text" ~/.bashrc; source ~/.bashrc'
 alias bashfunction='vim ~/.bash/conf/function-init.bash; source ~/.bashrc'
 alias bashalias='vim ~/.bash/conf/alias-init.bash; source ~/.bashrc'
-alias bashvariable='vim $bash_conf/variable-init.bash; source ~/.bashrc'
+alias bashvariable='vim ~/.bash/conf/variable-init.bash; source ~/.bashrc'
+alias rcupdate='source ~/.bashrc'
+alias mov='set -o vi'
+alias moe='set -o emacs'
 ## vim
 alias vimrc='vim ~/.vimrc'
 alias vimbundle='vim ~/.vim/conf/bundle-init.vim'
@@ -36,7 +37,7 @@ alias vimrsetting='vimr ~/.vim/conf/setting-init.vim'
 alias vimrplugin='vimr ~/.vim/conf/bundle-init-pluginlist.vim'
 # peco
 alias lp='$(ls|peco)'
-alias ap='sed "s/^alias //g" $bash_conf/alias-init.bash|peco'
+alias ap='sed -n "s/^alias //pg" $bash_conf/alias-init.bash|peco'
 # Git
 alias gco='git checkout'
 alias gb='git branch'
@@ -47,6 +48,7 @@ alias kreloadxml='/Applications/Karabiner.app/Contents/Library/bin/karabiner rel
 # Homebrew
 alias brewup='brew update && brew upgrade brew-cask && brew cleanup && brew cask cleanup && notice'
 alias brewdoctor='brew doctor && afternotice'
+alias brewi='brew install'
 # other
 alias exe='chmod +x'
 alias fc1='fc -ln|tail -n 1'
@@ -57,3 +59,4 @@ alias afternotice="osascript -e 'display notification \"OK\" with title \"iTerm2
 alias se='open -a "Script Editor"'
 alias allhistory='cat ~/.bash_history'
 alias editsh='vim ~/scripts/'
+alias rm='trash'
