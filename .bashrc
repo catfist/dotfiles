@@ -8,10 +8,10 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 # set -o vi
 
-# PROMPT
-# PROMPT_COMMAND='echo -ne "\033]0;${PWD/$HOME/~}\$(__git_ps1)\007"'
+# TITLE / PROMPT
+export PROMPT_COMMAND='echo -ne "\033]0;${PWD/$HOME/~}\007"'
 # PS1="\h@\u:\W\$(__git_ps1) \n\$ "
-PS1="\W\$(__git_ps1) \n\$ "
+PS1="[\w]\$(__git_ps1)\n\$ "
 
 # read config files
 #. $bash_conf/*

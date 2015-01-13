@@ -45,12 +45,20 @@ gitignore () {
   fi
 }
 gcm () {
+  git commit -m "$1"
+}
+gacm () {
+  ls|peco --prompt "Select to git add:"|xargs git add
+  echo "Input commit massage"
+  read Message
+  git commit -m "$Message"
+}
+gcma () {
   git add -A
   git commit -m "$1"
 }
 gpush () {
   if [ "$1" ];then
-    git add -A
     git commit -m "$1"
   fi
   git push && afternotice
@@ -293,7 +301,20 @@ addalias () {
     echo "alias $1='$2'" | tee -a ~/.bash/conf/alias-init.bash
     source ~/.bashrc
   else
-    echo ERROR: Input Name & Alias
+    if [ -z "$1" ];then
+      echo "Input alias name"
+      read Name
+    fi
+    if [ -z "$2" ];then
+      echo "Input alias substance"
+      read Sub
+    fi
+    if [ -n "$Name" -a -n "Sub" ];then
+      echo "alias $Name='Sub'" | tee -a ~/.bash/conf/alias-init.bash
+      source ~/.bashrc
+    else
+      echo "Canceled"
+    fi
   fi
 }
 addbundle () {
@@ -307,6 +328,7 @@ addbundle () {
 fp () {
   OPTIND_OLD="$OPTIND"
   OPTIND=1
+  flagE=0
   usage_exit() {
     echo "Usage: fp [-eh]"
   }
@@ -314,7 +336,7 @@ fp () {
   do
     case $OPT in
       e)
-        flag="$OPT"
+        flagE=1
         ;;
       h)  usage_exit
           return
@@ -329,7 +351,7 @@ fp () {
   OPTIND=$OPTIND_OLD
   bash_function="$bash_conf/function-init.bash"
   fname=$( grep '^[0-9a-zA-Z]\+ () {' "$bash_function" | sort | sed 's/ () {//' | peco )
-  if [ "$flag" = e ];then
+  if [ "$flagE" = 1 ];then
     vim "$bash_function" -c "/$fname" -c noh
   else
     type $fname
