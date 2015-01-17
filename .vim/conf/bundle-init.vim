@@ -9,7 +9,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
-source $VIM_CONF/bundle-init-pluginlist.vim " NeoBundleの設定
+source $vim_conf/bundle-init-pluginlist.vim " NeoBundleの設定
 " Note: You don't set neobundle setting in .gvimrc!
 call neobundle#end()
 

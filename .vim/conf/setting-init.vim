@@ -4,13 +4,13 @@ if has('unix')
     set fileformats=unix,dos,mac
     set fileencoding=utf-8
     set fileencodings=utf-8,iso-2022-jp,cp932,euc-jp
-    set termencoding=
+    set termencoding=utf-8
 elseif has('win32')
     set fileformat=dos
     set fileformats=dos,unix,mac
     set fileencoding=utf-8
     set fileencodings=iso-2022-jp,utf-8,euc-jp,cp932
-    set termencoding=
+    set termencoding=utf-8
 endif
 set helplang=ja,en " ヘルプ検索で日本語を優先
 

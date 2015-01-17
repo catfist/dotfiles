@@ -1,7 +1,8 @@
-" init all settings
-set all&
-" init autocmd
-autocmd!
+" " init all settings
+" set all&
+" " set filetype=sh
+" " init autocmd
+" autocmd!
 "-------encoding------
 if has('unix')
     set fileformat=unix
@@ -18,29 +19,43 @@ elseif has('win32')
 endif
 scriptencoding utf-8
 
+" for Unnamed buffer to sh
+set filetype=sh
 " references
 " [vimrcアンチパターン - rbtnn雑記](http://rbtnn.hateblo.jp/entry/2014/11/30/174749)
 
 " Split vim config files
-let $MYVIMRC = $HOME . '/.vimrc'
-let $VIM_CONF = $HOME . '/.vim/conf'
-source $VIM_CONF/setting-init.vim
-source $VIM_CONF/bundle-init.vim
-source $VIM_CONF/quickrun-init.vim
-" source $VIM_CONF/unite-init.vim  " Uniteの設定
+let MYVIMRC = $HOME . '/.vimrc'
+let vim_conf = $HOME . '/.vim/conf'
+source $vim_conf/setting-init.vim
+source $vim_conf/bundle-init.vim
+source $vim_conf/quickrun-init.vim
+source $vim_conf/plugin-setting-init.vim
+" source $vim_conf/unite-init.vim  " Uniteの設定
+
+" no expansion file
+" autocmd BufRead,BufNewFile * if expand('%:e') == '' | set filetype=sh | end
+" autocmd BufRead,BufNewFile .muttrc* | set filetype=muttrc 
 
 " auto reload .vimrc
 augroup source-vimrc
   autocmd!
-  autocmd BufWritePost *vimrc source $MYVIMRC
+  " autocmd BufRead,BufNewFile *.vimrc | set filetype=vim
+  autocmd BufWritePost *vimrc source $MYVIMRC | set filetype=vim
   autocmd BufWritePost *gvimrc if has('gui_running') source $MYGVIMRC
 augroup END
 
 " commands
 :command! Run :w !sh
 :command! Do :w !sh
+:command! Svim :source $MYVIMRC
+:command! Ts :!echo fuga
+:command! Ins :insert | hoge<CR><C-c>
+:command! Kre :!/Applications/Karabiner.app/Contents/Library/bin/karabiner reloadxml
 
 " mapping
+" Edit vimrc
+nmap ,v :edit $MYVIMRC<CR>
 " inoremap <D-j> <Esc>:m .+1<CR>==gi
 " inoremap <D-k> <Esc>:m .-2<CR>==gi
 vnoremap <Leader>j :m '>+1<CR>gv=gv
@@ -53,68 +68,9 @@ nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up>   gk
-
-" \cで行の先頭にコメントをつけたり外したりできる
-nmap <Leader>c <Plug>(caw:i:toggle)
-vmap <Leader>c <Plug>(caw:i:toggle)
-
-" Plugin key-mappings.
-nnoremap <Leader>e <Plug>(external-editor)
-" neocomplcache
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : ''
-    \ }
- inoremap <expr><C-g>     neocomplcache#undo_completion()
- inoremap <expr><C-l>     neocomplcache#complete_common_string()
-" Recommended key-mpip install vim-vintappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-
-" neosnippet
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-" 自分用 snippet ファイルの場所
-let s:my_snippet = '$VIM_CONF/snippets/'
-let g:neosnippet#snippets_directory = s:my_snippet
-
-let g:incsearch#auto_nohlsearch = 1
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-
+" write & quit
+nnoremap <C-q> :q
+nnoremap <C-S-q> :q!
 
 
 " ファイルタイプ別設定
