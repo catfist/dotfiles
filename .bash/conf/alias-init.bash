@@ -8,9 +8,10 @@ alias mi='open -a mi'
 alias ft='open -a FoldingText'
 alias marked='open -a "Marked 2"'
 alias st='open -a "Sublime Text"'
-alias td='$(ghq root)/github.com/KryDos/todoist-cli/todoist.py'
+alias td='todoist'
 alias ce='open -a coteditor'
 alias vimr='open -a vimr'
+alias se='open -a "Script Editor"'
 # dotfile
 ## bash
 alias bashprofile='vim ~/.bash_profile; source ~/.bash_profile'
@@ -57,8 +58,8 @@ alias fcc='fc -ln|tail -n 1|pbcopy'
 alias fcp='fc -ln|peco|pbcopy'
 alias afternotice="osascript -e 'display notification \"OK\" with title \"iTerm2\"' || osascript -e 'display notification \"NG\" with title \"iTerm2\"'; osascript -e 'tell application \"iterm\" to activate'"
 # Not arranged
-alias se='open -a "Script Editor"'
 alias allhistory='cat ~/.bash_history'
 alias editsh='vim ~/scripts/'
 alias rm='trash'
 alias ghqlist='find /Users/catfist/ghq -type d -maxdepth 3 -mindepth 3 > ~/dotfiles/ghqlist.txt'
+alias cap="awk '{ print toupper(substr($0, 1, 1)) substr($0, 2, length($0) - 1) }')"

@@ -4,15 +4,16 @@
 hw () {
   OPTIND_OLD="$OPTIND"
   OPTIND=1
+  POSTFIX=""
   usage_exit() {
     echo "Usage: hw [-a] [-p text]"
   }
   while getopts ap:h OPT
   do
     case $OPT in
-      a)  FLAG_A=1
+      a) pwd 
         ;;
-      p)  POSTFIX="$OPTARG"
+      p)  POSTFIX=" $OPTARG"
         ;;
       h)  usage_exit
           return
@@ -23,11 +24,8 @@ hw () {
     esac
   done
   shift $(($OPTIND - 1))
-  OPTIND=$OPTIND_OLD
-  echo Hollo World!
-  if [ "$FLAG_A" = 1 ];then
-    pwd
-  fi
+  OPTIND="$OPTIND_OLD"
+  echo "Hollo World!$POSTFIX"
 }
 ## git
 gitconfig () {
@@ -365,6 +363,51 @@ hlnpwd () {
   if [ -d "$Dir" ];then
     echo "ERROR: Dirctory is exsiting"
   else
-    hln $(pwd) $Dir
+    hln "$(pwd)" "$Dir"
   fi
+}
+# qlmanage / quick look
+qltext ()
+{
+  qlmanage -px -c text "$1" >& /dev/null
+}
+qlimg ()
+{
+  qlmanage -p "$1" >& /dev/null
+}
+initreadme ()
+{
+  echo readme | vim - README.md
+}
+fvb ()
+{
+  cd "$( find ~/.vim/bundle -maxdepth 1 -type d | peco )"
+  pwd
+}
+kobitocreate () {
+  cd ~/Dropbox/kobito
+  touch "$1".md
+  kobito link "$1".md
+  open -a "FoldingText" "$1".md
+}
+# [fix]
+dotlink () {
+  move_link () {
+    local TARGETPATH=$(echo "$1" | sed "s%$HOME%$HOME/dotfiles%")
+    if [ ! -e "$TARGETPATH" ];then
+      mv "$1" "$TARGETPATH"
+      ln -s "$TARGETPATH" "$1"
+      echo "linked: $TARGETPATH"
+    fi
+  }
+  # add new vim/bash conf file
+  for TARGETDIR in ~/.vim/conf ~/.bash/conf
+  do
+    for DIR in $(find "$TARGETDIR" -maxdepth 1 -mindepth 1 -type d)
+    do mkdir "$TARGETDIR"/$(basename "$DIR")
+    done
+    for FILE in $(find "$TARGETDIR" -mindepth 1 -type f)
+    do move_link "$FILE"
+    done
+  done
 }

@@ -1,4 +1,6 @@
 #!/bin/bash
+# vim
+export vim_conf=~/.vim/conf
 # Environment variable
 export GOPATH=~/gocode
 export OCEDITOR="vim"
