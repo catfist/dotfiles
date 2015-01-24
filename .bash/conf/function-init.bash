@@ -1,7 +1,7 @@
 #!/bin/bash
 # Shell Functions
 ## sample
-hw () {
+hwf () {
   OPTIND_OLD="$OPTIND"
   OPTIND=1
   POSTFIX=""
@@ -43,7 +43,13 @@ gitignore () {
   fi
 }
 gcm () {
-  git commit -m "$1"
+  if [ -z "$1" ];then
+    echo "Imput commit message"
+    read message
+  else
+    message="$1"
+  fi
+  git commit -m "$message"
 }
 gacm () {
   ls|peco --prompt "Select to git add:"|xargs git add
@@ -323,7 +329,7 @@ addbundle () {
     vim -c $ ~/.vim/conf/bundle-init-pluginlist.vim
   fi
 }
-fp () {
+fp () { # find bash functions
   OPTIND_OLD="$OPTIND"
   OPTIND=1
   flagE=0
@@ -348,7 +354,7 @@ fp () {
   shift $(($OPTIND - 1))
   OPTIND=$OPTIND_OLD
   bash_function="$bash_conf/function-init.bash"
-  fname=$( grep '^[0-9a-zA-Z]\+ () {' "$bash_function" | sort | sed 's/ () {//' | peco )
+  fname=$(sed -n 's/^\([0-9a-zA-Z]*\) () {/\1/p' "$bash_function" | sort | peco )
   if [ "$flagE" = 1 ];then
     vim "$bash_function" -c "/$fname" -c noh
   else
@@ -410,4 +416,50 @@ dotlink () {
     do move_link "$FILE"
     done
   done
+}
+snip () {
+  # [fix]
+  cd $vim_conf/snippets
+  if [ -n "$1" ];then
+    vim $(ls | grep -im1 "$1")
+  else
+    vim $(ls | peco)
+  fi
+
+  # CREATOR=USER
+  # DIR=("$HOME/.vim/bundle/neosnippet-snippet/neosnippet-snippet" "$HOME/.vim/conf/snippets")
+  # usage () {
+  #   echo "snip [-b] [-h] [name]"
+  # }
+  # while getopts "hub" OPT
+  # do
+  #   case "$OPT" in
+  #     h) usage ;;
+  #     u) CREATOR=1 ;;
+  #     b) CREATOR=0 ;;
+  #     ?) echo "undifined option";usage ;;
+  #   esac
+  # done
+  # cd ${DIR[$CREATOR]}
+  # if [ -n "$1" ];then
+  #   vim $(ls | grep -im1 "$1")
+  # else
+  #   vim $(ls | peco)
+  # fi
+}
+list () {
+  # initialize variables
+  OPTNAME=""
+  if [ -n "$1" ];then
+    OPTNAME=" -name $1"
+  fi
+  find . -mindepth 1 -maxdepth 1"$OPTNAME"
+}
+ghqcreate () {
+  host=$(ls $(ghq root)|peco --prompt "select host")
+  echo "enter repo name"
+  read name
+  mkdir $(ghq root)/$host/$name
+  cd $(ghq root)/$host/$name
+  git init
 }
