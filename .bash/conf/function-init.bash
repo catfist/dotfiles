@@ -42,15 +42,15 @@ gitignore () {
     vim ~/.gitignore
   fi
 }
-gcm () {
-  if [ -z "$1" ];then
-    echo "Imput commit message"
-    read message
-  else
-    message="$1"
-  fi
-  git commit -m "$message"
-}
+# gcm () {
+#   if [ -z "$1" ];then
+#     echo "Imput commit message"
+#     read message
+#   else
+#     message="$1"
+#   fi
+#   git commit -m "$message"
+# }
 gacm () {
   ls|peco --prompt "Select to git add:"|xargs git add
   echo "Input commit massage"
@@ -456,10 +456,33 @@ list () {
   find . -mindepth 1 -maxdepth 1"$OPTNAME"
 }
 ghqcreate () {
-  host=$(ls $(ghq root)|peco --prompt "select host")
+  host=$(ls "$(ghq root)"|peco --prompt "select host")
   echo "enter repo name"
   read name
-  mkdir $(ghq root)/$host/$name
-  cd $(ghq root)/$host/$name
+  mkdir "$(ghq root)"/"$host"/"$name"
+  cd "$(ghq root)"/"$host"/"$name"
   git init
+}
+apath () { # echo absolute path of argument
+  echo "$(cd "$(dirname "$1")" && pwd)"/"$(basename "$1")"
+}
+ecmd () {
+  if type "$1" | grep -q 'is a function';then
+    mvim "$bash_function" -c "/^$1 ()"
+    source "$bash_function"
+    return
+  else
+    if ! which "$1" 1>/dev/null ; then
+      echo "This commad is not existing"
+      return
+    fi
+  fi
+  local cmdpath="$(which "$1")"
+  if file "$cmdpath" | sed 's/^[^:]*: //' | grep -q 'text'; then
+    mvim "$cmdpath"
+    return
+  else
+    echo "Not text/script file"
+    return
+  fi
 }

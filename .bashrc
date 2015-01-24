@@ -1,10 +1,10 @@
 #!/bin/bash
-bash_conf=~/.bash/conf
-if [ -f $(brew --prefix)/etc/profile.d/z.sh ];then
-  . $(brew --prefix)/etc/profile.d/z.sh
+export bash_conf=~/.bash/conf
+if [ -f "$(brew --prefix)"/etc/profile.d/z.sh ];then
+  . "$(brew --prefix)"/etc/profile.d/z.sh
 fi
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if [ -f "$(brew --prefix)"/etc/bash_completion ]; then
+  . "$(brew --prefix)"/etc/bash_completion
 fi
 # set -o vi
 
@@ -20,6 +20,8 @@ PS1="[\w]\$(__git_ps1)\n\$ "
 . $bash_conf/alias-init.bash
 . $bash_conf/function-init.bash
 . $bash_conf/git-completion.bash
+export bash_alias="$bash_conf/alias-init.bash"
+export bash_function="$bash_conf/function-init.bash"
 # . $bash_conf/prompt-init.bash   # プロンプトの設定
 
 ## Display modified time
