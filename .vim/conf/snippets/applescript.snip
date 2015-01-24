@@ -1,0 +1,46 @@
+# scpt.snip
+snippet shebang
+alias sb
+abbr #!/usr/bin/osascript
+options head
+  #!/usr/bin/osascript
+  ${0:#:TARGET}
+
+snippet tel
+abbr tell ${1} "${2}"
+options head
+  tell ${1:application} "${2:Script Editor}"${3: to }${4: activate }${0}
+
+snippet end
+abbr end ${1}
+options word
+  ${0:#:TARGET}
+  end ${1:tell}
+
+# snippet to
+# options word
+#   to ${1:activate} ${0:#:TARGET}
+
+snippet set
+abbr set ${1} to ${2}
+options head
+  set ${1:variable} to ${0:#:TARGET}
+
+snippet quote
+alias qf
+abbr quoted form of ${1}
+  quoted form of ${0:#:variable}
+
+# value
+snippet activate
+  activate
+
+snippet sys
+abbr system event
+  system event${0}
+
+# snippet application
+#   application
+
+snippet get
+  get

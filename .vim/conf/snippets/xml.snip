@@ -1,0 +1,48 @@
+# karabiner private.xml
+snippet     item
+abbr        <item>
+options     head
+  <item>
+  <name>${1:name}</name>
+    <identifier>${2:identifier}</identifier>
+    <only>${3:only}</only>
+    <autogen>
+      ${0:simul}
+    </autogen>
+  </item>
+
+snippet     autogen
+alias ag
+abbr        <autogen>{contents}</autogen>
+options     head
+  <autogen>
+      ${0:simul}
+  </autogen>
+
+snippet     key
+abbr        KeyCode::
+  KeyCode::${1:KEY_1}${0}
+
+snippet     mod
+abbr        ModifierFlag::${0:CONTROL_L}
+  ModifierFlag::${1:CONTROL_L}${0}
+
+snippet     optraw
+abbr        Option::SIMULTANEOUSKEYPRESSES_RAW
+  Option::SIMULTANEOUSKEYPRESSES_RAW
+
+snippet     optstr
+abbr        Option::SIMULTANEOUSKEYPRESSES_STRICT_KEY_ORDER
+  Option::SIMULTANEOUSKEYPRESSES_STRICT_KEY_ORDER
+
+snippet     simul
+abbr        __SimultaneousKeyPresses__
+options     head
+  __SimultaneousKeyPresses__
+  ${0:key}
+
+snippet     ktk
+abbr        --KeyToKey--
+options     head
+  --KeyToKey--
+  ${0:key}

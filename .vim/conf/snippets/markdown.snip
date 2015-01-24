@@ -1,0 +1,52 @@
+snippet h1
+option head
+  # {1:title}
+  {0:#:TARGET}
+
+snippet h2
+option head
+  ## {1:title}
+  {0:#:TARGET}
+
+snippet h3
+option head
+  ### {1:title}
+  {0:#:TARGET}
+
+snippet h4
+option head
+  #### {1:title}
+  {0:#:TARGET}
+
+snippet h5
+option head
+  ##### {1:title}
+  {0:#:TARGET}
+
+snippet h6
+option head
+  ###### {1:title}
+  {0:#:TARGET}
+
+snippet bold
+alias strong b
+abbr **${0:#:text}**
+  **${0:#:text}**
+
+snippet italic
+alias em emphasis i
+abbr *${0:#:text}*
+  *${0:#:text}*
+
+snippet codeblock
+alias cdb
+option head
+abbr ``` ```
+  ```${1:bash}
+  ${0:#:TARGET}
+  ```
+snippet blockquote
+alias bq
+abbr > ${1}
+  > ${1:quoted text}
+  ${0}

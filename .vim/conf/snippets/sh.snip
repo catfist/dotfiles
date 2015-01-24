@@ -1,0 +1,117 @@
+snippet bash
+abbr shebang
+options head
+alias sb
+	#!/bin/bash
+	${0:TARGET}
+
+snippet als
+abbr bash alias
+options head
+  alias ${1:#:name}='${0:TARGET}'
+
+sh
+snippet getoptfunction
+abbr build-in getopt (for bash function)
+alias gofunc
+option head
+  OPTIND_OLD="$OPTIND"
+  OPTIND=1
+  usage () {
+    echo "Usage: ${0}"
+  return
+  }
+  while getopts ${1:h} OPT
+  do
+    case $OPT in
+      ${2:#:OPT}) ${3:#:process} ;;
+      h) usage ;;
+      ?) usage ;;
+    esac
+  done
+  shift $(($OPTIND - 1))
+  OPTIND="$OPTIND_OLD"
+  ${0}
+}
+snippet getoptscript
+abbr while getopt (for script files)
+alias goscript
+option head
+  usage () {
+    echo "Usage: ${0}"
+    return
+  }
+  while getopts ${1:h} OPT
+  do
+    case $OPT in
+      ${2:#:OPT}) ${3:#:process} ;;
+      h) usage ;;
+      ?) usage ;;
+    esac
+  done
+  shift $(($OPTIND - 1))
+
+snippet getoptsfuncrion
+abbr long opt, post opt (function)
+alias gosf
+  usage () {
+    echo "Usage: "
+    return
+  }
+  declare -i argc=0
+  declare -a argv=()
+
+  while (( $# > 0 ))
+  do
+      case "\$1" in
+          -*)
+              if [[ "\$1" =~ '${1:#:option}' ]]; then
+                  pflag='-p'
+              fi
+              shift${2:# 2}
+              ${0}
+              ;;
+          *)
+              ((++argc))
+              argv=("${argv[@]}" "$1")
+              shift
+              ;;
+      esac
+  done
+  
+snippet getoptsscript
+abbr long opt, post opt (script)
+alias goss
+  usage () {
+    echo "Usage: "
+    exit 1
+  }
+  declare -i argc=0
+  declare -a argv=()
+
+  while (( $# > 0 ))
+  do
+      case "\$1" in
+          -*)
+              if [[ "\$1" =~ '${1:#:option}' ]]; then
+                  pflag='-p'
+              fi
+              shift${2:# 2}
+              ${0}
+              ;;
+          *)
+              ((++argc))
+              argv=("${argv[@]}" "$1")
+              shift
+              ;;
+      esac
+  done
+  
+
+snippet     whileread
+abbr        while read (array)
+options     head
+  while read ${1:array}
+  do
+    ${0:<`3:#:TARGET`>}
+  done

@@ -65,15 +65,15 @@ set backspace=2
 
 "-------Search--------
 "インクリメンタルサーチを有効にする
-set incsearch
+" set incsearch
 "大文字小文字を区別しない
-set ignorecase
+" set ignorecase
 "大文字で検索されたら対象を大文字限定にする
-set smartcase
+" set smartcase
 "行末まで検索したら行頭に戻る
-set wrapscan
+" set wrapscan
 "検索結果をハイライトする
-set hlsearch
+" set hlsearch
 
 "---parenthesis matching---
 "括弧の対応をハイライト
