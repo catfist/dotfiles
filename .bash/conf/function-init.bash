@@ -464,7 +464,9 @@ ghqcreate () {
   git init
 }
 apath () { # echo absolute path of argument
-  echo "$(cd "$(dirname "$1")" && pwd)"/"$(basename "$1")"
+  local cmd="$(cd "$(dirname "$1")" && pwd)"/"$(basename "$1")"
+  echo "$cmd"
+  echo "$cmd" | pbcopy
 }
 ecmd () {
   if type "$1" | grep -q 'is a function';then

@@ -1,4 +1,5 @@
 #!/bin/bash
-export PATH="/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:$PATH:/Users/catfist/.gem/ruby/2.0.0/bin:/User/catfist/gocode/bin"
+export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.anyenv/bin:$PATH"
 source ~/.bashrc
 eval "$(rbenv init -)"
+eval "$(anyenv init -)"
