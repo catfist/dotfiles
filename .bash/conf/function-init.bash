@@ -23,7 +23,7 @@ hwf () {
         ;;
     esac
   done
-  shift $(($OPTIND - 1))
+  shift $(("$OPTIND" - 1))
   OPTIND="$OPTIND_OLD"
   echo "Hollo World!$POSTFIX"
 }
@@ -52,7 +52,7 @@ gitignore () {
 #   git commit -m "$message"
 # }
 gacm () {
-  ls|peco --prompt "Select to git add:"|xargs git add
+  find . -maxdepth 1 -mindepth 1|peco --prompt "Select to git add:"|xargs git add
   echo "Input commit massage"
   read Message
   git commit -m "$Message"
@@ -61,35 +61,21 @@ gcma () {
   git add -A
   git commit -m "$1"
 }
-gpush () {
+gps () {
   if [ "$1" ];then
     git commit -m "$1"
   fi
   git push && afternotice
 }
-gtag () {
-  git add -A
+gt () {
   git commit -m "$2"
   git tag -a "$1" -m "$2"
 }
-## other
-alwrelease () {
-  if pwd | grep -q 'Alfred.alfredpreferences/workflows/';then
-    if [ -d .git ]; then
-      echo Input name of workflow
-      read Name
-      echo Input Tag
-      read Tag
-      if [ ! -n "$Name" -a -n "$Tag" ];then
-        zip -r "$Name.alfredworkflow" "$(git ls-files)"
-        ghr "$Tag" "$Name".alfredworkflow
-      else echo "No Workflow Name or Git Tag"
-      fi
-    else echo "Not a Git repository"
-    fi
-  else echo "Not a Alfred Workflow directory"
-  fi
+ga () {
+  git add "$*"
+  git status
 }
+## other
 notice () {
     if [ "$1" ];then
       text="$1"
@@ -123,16 +109,13 @@ gn () {
 }
 mvup () {
   ls -a
-  echo "Move all to parent directory? [Y/n]"
+  echo "Move all to parent directory? ['Y'/n]"
   read ANSWER
-  ANSWER=$(echo "$ANSWER" | tr y Y | tr -d '[\[\]]')
+  ANSWER=$(echo "$ANSWER" | tr y Y)
   case "$ANSWER" in
     ""|Y* )
+      find . -mindepth 1 -maxdepth 1 -exec mv {} .{} \;
       cd=$(pwd)
-      for f in $(ls -A)
-      do
-        mv -f "$f" ../"$f"
-      done
       cd ..; rm -rf "$cd"; pwd; ls -A
       ;;
     *  )
@@ -144,7 +127,7 @@ pub () {
   # PATH=$PATH:usr/local/bin
   gsed -i -e 's/status: d/status: p/' -e "s/^date: .*$/date: $(date '+%Y-%m-%d %H:%M')/" "$1" 
   title=$(grep -m1 'title:' "$1" | cut -c 8- | sed -e 's/ /-/g' -e 's/[\.\/]//g')
-  mv "$1" ../_posts/$(date '+%Y-%m-%d')-"$title".md
+  mv "$1" ../_posts/"$(date '+%Y-%m-%d')-$title".md
 }
 addpath () {
   gsed -i "s%^\(export PATH=.*\)\"$%\1:${1}\"%" ~/.bash_profile
@@ -177,12 +160,12 @@ afunction () {
 
 }" > "$tmp"
 vim "$tmp" +2
-echo "Add this function? [Y/n]"
+echo "Add this function? ['Y'/n]"
 read ANSWER
-ANSWER=$(echo "$ANSWER" | tr y Y | tr -d '[\[\]]')
+ANSWER=$(echo "$ANSWER" | tr y Y)
 case "$ANSWER" in
   ""|Y* )
-    cat "$tmp" >> ${bash_conf}/function-init.bash
+    cat "$tmp" >> $"bash_function"
     source ~/.bashrc
     ;;
   *  )
@@ -193,8 +176,7 @@ esac
 # ghq
 gp () {
   dir=$(ghq list -p catfist/|grep -i "$(ghq root)/.*/catfist/.*$1.*"|peco)
-  if [ "$dir" ]
-    then
+  if [ -d "$dir" ]; then
     cd "$dir"
     pwd
   else
@@ -203,8 +185,7 @@ gp () {
 }
 gpa () {
   dir=$(ghq list -p "$1"|peco)
-  if [ "$dir" ]
-    then
+  if [ -d "$dir" ]; then
     cd "$dir"
     pwd
   else
@@ -212,39 +193,21 @@ gpa () {
   fi
 }
 fr () {
-  dir=$(ghq list -p "catfist/"|grep -im1 "$(ghq root)/.*/catfist/.*$1.*")
-  if [ "$dir" ]
-    then
-      cd "$dir"
-      pwd
-    else
-      q=$(echo $1|awk '{ print toupper(substr($0, 1, 1)) substr($0, 2, length($0) - 1) }') #capitarize
-      dir=$(ghq list -p "catfist/"|grep -m1 "$(ghq root)/.*/catfist/.*$q.*")
-    if [ "$dir" ]
-    then
-      cd "$dir"
-      pwd
-    else
-      echo "ERROR:No hit"
-    fi
-  fi
-}
-fra () {
-  dir=$(ghq list -p "$1"|grep -m1 ".*$1.*")
-  if [ "$dir" ]
-    then
+  dir=$(ghq list -p "catfist/"|grep -im1 "$(ghq root)/[^/]*/catfist/.*$1.*")
+  if [ -d "$dir" ]; then
     cd "$dir"
     pwd
   else
-    q=$(echo $1|awk '{ print toupper(substr($0, 1, 1)) substr($0, 2, length($0) - 1) }') #capitarize
-    dir=$(ghq list -p "$q"|grep -m1 ".*$q.*")
-    if [ "$dir" ]
-    then
-      cd "$dir"
-      pwd
-    else
-      echo "ERROR:No hit"
-    fi
+    echo "ERROR:No hit"
+  fi
+}
+fra () {
+  dir=$(ghq list -p|grep -im1 ".*$1.*")
+  if [ -d "$dir" ]; then
+    cd "$dir"
+    pwd
+  else
+    echo "ERROR:No hit"
   fi
 }
 ghqfetch () {
@@ -256,7 +219,7 @@ ghqfetch () {
   done
 }
 fdotfiles () {
-  file=$(ls -a ~/dotfiles|peco)
+  file=$(find . -mindepth 1 -maxdepth 1 ~/dotfiles|peco)
   if [ "$file" ];then
     vim "$file"
   fi
@@ -267,9 +230,9 @@ csh () {
     echo "#!/bin/bash" > "${tmp}"
     echo "" >> "${tmp}"
     vim "${tmp}" +2
-    echo "Add this script? [Y/n]"
+    echo "Add this script? [Y/'n']"
     read ANSWER
-    ANSWER=$(echo "$ANSWER" | tr y Y | tr -d '[\[\]]')
+    ANSWER=$(echo "$ANSWER" | tr y Y)
     case "$ANSWER" in
       Y* )
         mv "${tmp}" ~/scripts/"$1".sh
@@ -296,14 +259,14 @@ bbcreate () {
   username=catfist
   password=$(grep password ~/.bitbucket | sed 's/password = //')
   reponame="$1"
-  curl --user $username:$password https://api.bitbucket.org/1.0/repositories/ --data name=$reponame --data is_private='true'
-  git remote add origin git@bitbucket.org:$username/$reponame.git
+  curl --user "$username:$password" https://api.bitbucket.org/1.0/repositories/ --data name="$reponame" --data is_private='true'
+  git remote add origin "git@bitbucket.org:$username/$reponame.git"
   git push -u origin --all
 }
 addalias () {
   if [ -n "$1" -a -n "$2" ];then
-    echo "alias $1='$2'" | tee -a ~/.bash/conf/alias-init.bash
-    source ~/.bashrc
+    echo "alias $1='$2'" | tee -a "$bash_alias"
+    source "$bash_alias"
   else
     if [ -z "$1" ];then
       echo "Input alias name"
@@ -314,79 +277,31 @@ addalias () {
       read Sub
     fi
     if [ -n "$Name" -a -n "Sub" ];then
-      echo "alias $Name='Sub'" | tee -a ~/.bash/conf/alias-init.bash
-      source ~/.bashrc
+      echo "alias $Name='$Sub'" | tee -a "$bash_alias"
+      source "$bash_alias"
     else
       echo "Canceled"
     fi
   fi
 }
 addbundle () {
-  if [ "$(pbpaste | grep 'NeoBundle '\''[0-9a-zA-Z]\+/[0-9a-zA-Z.-]\+'\''')"  ];then
+  if pbpaste | grep 'NeoBundle '\''[0-9a-zA-Z]\+/[0-9a-zA-Z.-]\+'\''';then
     pbpaste >> ~/.vim/conf/bundle-init-pluginlist.vim
     echo "Added Bundle \"$(pbpaste)\""
   else
     vim -c $ ~/.vim/conf/bundle-init-pluginlist.vim
   fi
 }
-fp () { # find bash functions
-  OPTIND_OLD="$OPTIND"
-  OPTIND=1
-  flagE=0
-  usage_exit() {
-    echo "Usage: fp [-eh]"
-  }
-  while getopts "eh" OPT
-  do
-    case $OPT in
-      e)
-        flagE=1
-        ;;
-      h)  usage_exit
-          return
-        ;;
-      \?)  echo "unknown option"
-          usage_exit
-          return
-        ;;
-    esac
-  done
-  shift $(($OPTIND - 1))
-  OPTIND=$OPTIND_OLD
-  bash_function="$bash_conf/function-init.bash"
-  fname=$(sed -n 's/^\([0-9a-zA-Z]*\) () {/\1/p' "$bash_function" | sort | peco )
-  if [ "$flagE" = 1 ];then
-    vim "$bash_function" -c "/$fname" -c noh
-  else
-    type $fname
-  fi
-}
-hlnpwd () {
-  Host="$(ls $(ghq root)/|peco --prompt "Select Git Host:")"
-  echo "Input Project Name"
-  read Name
-  Dir="$(ghq root)/$Host/catfist/$Name"
-  if [ -d "$Dir" ];then
-    echo "ERROR: Dirctory is exsiting"
-  else
-    hln "$(pwd)" "$Dir"
-  fi
-}
-# qlmanage / quick look
-qltext ()
-{
+qltext () { # qlmanage / quick look text
   qlmanage -px -c text "$1" >& /dev/null
 }
-qlimg ()
-{
+qlimg () { # qlmanage / quick look image
   qlmanage -p "$1" >& /dev/null
 }
-initreadme ()
-{
+initreadme () {
   echo readme | vim - README.md
 }
-fvb ()
-{
+fvb () {
   cd "$( find ~/.vim/bundle -maxdepth 1 -type d | peco )"
   pwd
 }
@@ -396,34 +311,12 @@ kobitocreate () {
   kobito link "$1".md
   open -a "FoldingText" "$1".md
 }
-# [fix]
-dotlink () {
-  move_link () {
-    local TARGETPATH=$(echo "$1" | sed "s%$HOME%$HOME/dotfiles%")
-    if [ ! -e "$TARGETPATH" ];then
-      mv "$1" "$TARGETPATH"
-      ln -s "$TARGETPATH" "$1"
-      echo "linked: $TARGETPATH"
-    fi
-  }
-  # add new vim/bash conf file
-  for TARGETDIR in ~/.vim/conf ~/.bash/conf
-  do
-    for DIR in $(find "$TARGETDIR" -maxdepth 1 -mindepth 1 -type d)
-    do mkdir "$TARGETDIR"/$(basename "$DIR")
-    done
-    for FILE in $(find "$TARGETDIR" -mindepth 1 -type f)
-    do move_link "$FILE"
-    done
-  done
-}
-snip () {
-  # [fix]
-  cd $vim_conf/snippets
+snip () { # cd & edit neosnippet [fix]
+  cd "$vim_conf/snippets"
   if [ -n "$1" ];then
-    vim $(ls | grep -im1 "$1")
+    vim "$(find . -mindepth 1 -maxdepth 1 | grep -im1 "$1")"
   else
-    vim $(ls | peco)
+    vim "$(find . -mindepth 1 -maxdepth 1 | peco)"
   fi
 
   # CREATOR=USER
@@ -447,7 +340,7 @@ snip () {
   #   vim $(ls | peco)
   # fi
 }
-list () {
+list () { # alternative 'ls' with 'find'
   # initialize variables
   OPTNAME=""
   if [ -n "$1" ];then
@@ -455,36 +348,38 @@ list () {
   fi
   find . -mindepth 1 -maxdepth 1"$OPTNAME"
 }
-ghqcreate () {
-  host=$(ls "$(ghq root)"|peco --prompt "select host")
-  echo "enter repo name"
-  read name
-  mkdir "$(ghq root)"/"$host"/"$name"
-  cd "$(ghq root)"/"$host"/"$name"
-  git init
-}
 apath () { # echo absolute path of argument
   local cmd="$(cd "$(dirname "$1")" && pwd)"/"$(basename "$1")"
   echo "$cmd"
   echo "$cmd" | pbcopy
 }
-ecmd () {
+ec () {
   if type "$1" | grep -q 'is a function';then
-    mvim "$bash_function" -c "/^$1 ()"
+    vim "$bash_function" -c "/^$1 ()"
     source "$bash_function"
     return
-  else
-    if ! which "$1" 1>/dev/null ; then
-      echo "This commad is not existing"
+  fi
+  if type "$1" | grep -q 'is aliased';then
+    vim "$bash_alias" -c "/^alias $1="
+    source "$bash_alias"
+    return
+  fi
+  if type "$1" | grep -q 'is /';then
+    local cmdpath="$(which "$1")"
+    if file "$cmdpath" | sed 's/^[^:]*: //' | grep -q 'text'; then
+      mvim "$cmdpath"
+      return
+    else
+      echo "Not text/script file"
       return
     fi
   fi
-  local cmdpath="$(which "$1")"
-  if file "$cmdpath" | sed 's/^[^:]*: //' | grep -q 'text'; then
-    mvim "$cmdpath"
+  if ! which "$1" 1>/dev/null ; then
+    echo "This command is not existing"
     return
   else
-    echo "Not text/script file"
+    echo "This command is not editable"
+    type "$1"
     return
   fi
 }
