@@ -1,1 +1,0 @@
-/usr/local/Cellar/git/2.2.1/etc/bash_completion.d/git-completion.bash
