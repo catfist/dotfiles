@@ -40,7 +40,6 @@ alias moe='set -o emacs'
 alias lp='$(ls|peco)'
 alias ap='sed -n "s/^alias //pg" $bash_conf/alias-init.bash|peco'
 # Git
-alias ga='git add'
 alias gco='git checkout'
 alias gb='git branch'
 alias gst='git status'
