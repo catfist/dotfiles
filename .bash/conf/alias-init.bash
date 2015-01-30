@@ -14,12 +14,12 @@ alias vimr='open -a vimr'
 alias se='open -a "Script Editor"'
 # dotfile
 ## bash
-alias bashprofile='vim ~/.bash_profile; source ~/.bash_profile'
+alias bashp='vim ~/.bash_profile; source ~/.bash_profile'
 alias bashrc='vim ~/.bashrc; source ~/.bashrc'
-alias bashfunction='vim ~/.bash/conf/function-init.bash; source ~/.bashrc'
-alias bashalias='vim ~/.bash/conf/alias-init.bash; source ~/.bashrc'
-alias bashvariable='vim ~/.bash/conf/variable-init.bash; source ~/.bashrc'
-alias rcupdate='source ~/.bashrc'
+alias bashf='vim ~/.bash/conf/function-init.bash; source ~/.bashrc'
+alias basha='vim ~/.bash/conf/alias-init.bash; source ~/.bashrc'
+alias bashv='vim ~/.bash/conf/variable-init.bash; source ~/.bashrc'
+alias rcup='source ~/.bashrc'
 ## vim
 alias vimrc='vim ~/.vimrc'
 alias vimbundle='vim ~/.vim/conf/bundle-init.vim'
@@ -43,6 +43,7 @@ alias ap='sed -n "s/^alias //pg" $bash_conf/alias-init.bash|peco'
 alias gco='git checkout'
 alias gb='git branch'
 alias gst='git status'
+alias grmd='git rm $(git ls-files --deleted)'
 # karabiner
 alias karabiner='/Applications/Karabiner.app/Contents/Library/bin/karabiner'
 alias kreloadxml='/Applications/Karabiner.app/Contents/Library/bin/karabiner reloadxml'
@@ -69,9 +70,7 @@ alias fcp='fc -ln|peco|pbcopy'
 alias afternotice="osascript -e 'display notification \"OK\" with title \"iTerm2\"' || osascript -e 'display notification \"NG\" with title \"iTerm2\"'; osascript -e 'tell application \"iterm\" to activate'"
 # Not arranged
 alias allhistory='cat ~/.bash_history'
-alias editsh='vim ~/scripts/'
 alias rm='trash'
-alias ghqlist='find /Users/catfist/ghq -type d -maxdepth 3 -mindepth 3 > ~/dotfiles/ghqlist.txt'
-alias cap="awk '{ print toupper(substr($0, 1, 1)) substr($0, 2, length($0) - 1) }')"
+alias ghqlist='find "$(ghq root)" -type d -maxdepth 3 -mindepth 3 > ~/dotfiles/ghqlist.txt'
 alias hwa='echo "hello world!"'
 alias lns='ln -s'

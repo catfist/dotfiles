@@ -1,8 +1,8 @@
 #!/bin/bash
 # vim
 export vim_conf=~/.vim/conf
+export vim_bundle=~/.vim/bundle
 # Environment variable
-export GOPATH=~/gocode
 export OCEDITOR="vim"
 export EDITOR="vim"
 # homebrew
@@ -12,6 +12,7 @@ export GISTY_DIR=$(ghq root)/github.com/gisty
 export GISTY_ACCESS_TOKEN=6a76677684485357aacc96c91af697e5bef7d7c5
 export GISTY_SSL_VERIFY="NONE"
 # path
+export bindir=~/shellscripts
 export gr=$(ghq root)
 export alw=~/Dropbox/setting/Alfred.alfredpreferences/workflows
 # api token

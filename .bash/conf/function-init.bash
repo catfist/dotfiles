@@ -16,10 +16,10 @@ hwf () {
       p)  POSTFIX=" $OPTARG"
         ;;
       h)  usage_exit
-          return
+        return
         ;;
       \?) usage_exit
-          return
+        return
         ;;
     esac
   done
@@ -75,14 +75,17 @@ ga () {
   git add "$*"
   git status
 }
+gpa () {
+  git status | sed -n 's/	//p' | peco | sed 's/[^:]*://' | xargs git add
+}
 ## other
 notice () {
-    if [ "$1" ];then
-      text="$1"
-    else
-      text="command is done"
-    fi
-    osascript -e "display notification \"$text\" with title \"iterm2\""
+  if [ "$1" ];then
+    text="$1"
+  else
+    text="command is done"
+  fi
+  osascript -e "display notification \"$text\" with title \"iterm2\""
 }
 cb () {
   if [ -z "$1" ]
@@ -174,7 +177,7 @@ case "$ANSWER" in
 esac
 }
 # ghq
-gp () {
+pr () {
   dir=$(ghq list -p catfist/|grep -i "$(ghq root)/.*/catfist/.*$1.*"|peco)
   if [ -d "$dir" ]; then
     cd "$dir"
@@ -183,7 +186,7 @@ gp () {
     echo "ERROR:No hit"
   fi
 }
-gpa () {
+pra () {
   dir=$(ghq list -p "$1"|peco)
   if [ -d "$dir" ]; then
     cd "$dir"
@@ -225,33 +228,29 @@ fdotfiles () {
   fi
 }
 csh () {
-  if [ "$1" ];then
-    tmp=/tmp/$(date '+%s')_$1.sh
-    echo "#!/bin/bash" > "${tmp}"
-    echo "" >> "${tmp}"
-    vim "${tmp}" +2
-    echo "Add this script? [Y/'n']"
-    read ANSWER
-    ANSWER=$(echo "$ANSWER" | tr y Y)
-    case "$ANSWER" in
-      Y* )
-        mv "${tmp}" ~/scripts/"$1".sh
-        chmod +x ~/scripts/"$1".sh
-        ln -s ~/scripts/"$1".sh /usr/local/bin/"$1"
-        echo "Script created"
-        ;;
-      *  )
-        echo "Canceled"
-        ;;
-    esac
+  if [ -n "$1" ];then
+    name="$1"
   else
-    echo Input script name
+    echo "Input scripte name/path"
+    read name
   fi
+  if [ -e "$name" ];then
+    echo "Same file is existing"
+    return
+  else
+    if [ ! -d "$(dirname "$name")" ]; then
+      mkdir -p "$(dirname "$name")"
+    fi
+  fi
+  echo "#!/bin/bash" > "$name"
+  echo "" >> "$name"
+  chmod +x "$name"
+  vim "$name" +2
 }
 zp () {
   dir=$(z "$1" | peco)
   if [ "$dir" ]
-    then
+  then
     cd "/${dir#*/}"
   fi
 }
@@ -354,32 +353,49 @@ apath () { # echo absolute path of argument
   echo "$cmd" | pbcopy
 }
 ec () {
-  if type "$1" | grep -q 'is a function';then
-    vim "$bash_function" -c "/^$1 ()"
-    source "$bash_function"
-    return
-  fi
-  if type "$1" | grep -q 'is aliased';then
-    vim "$bash_alias" -c "/^alias $1="
-    source "$bash_alias"
-    return
-  fi
-  if type "$1" | grep -q 'is /';then
-    local cmdpath="$(which "$1")"
-    if file "$cmdpath" | sed 's/^[^:]*: //' | grep -q 'text'; then
-      mvim "$cmdpath"
-      return
-    else
-      echo "Not text/script file"
-      return
-    fi
-  fi
-  if ! which "$1" 1>/dev/null ; then
-    echo "This command is not existing"
-    return
-  else
-    echo "This command is not editable"
-    type "$1"
-    return
-  fi
+  case "$(type "$1" | sed -n '1s/.*is \(..\).*/\1/p')" in
+    "a " )
+      # vim "$bash_function" -c "/^$1 ()"
+      vim "$bash_conf/function-init.bash" -c "/^$1 ()"
+      # source "$bash_function"
+      source ~/.bashrc
+      ;;
+    "al" )
+      # vim "$bash_alias" -c "/^alias $1="
+      vem "$bash_cnf/alias-init.bash" -c "/^$1 ()"
+      # source "$bash_alias"
+      source ~/.bashrc
+      ;;
+    /*|ha)
+      local cmdpath="$(type "$1" | sed 's%^[^/]*\(/[^)]*\))%\1%')"
+      if file "$cmdpath" | sed 's/^[^:]*: //' | grep -q 'text'; then
+        mvim "$cmdpath"
+      else
+        echo "Not text/script file"
+      fi
+      ;;
+    * )
+      echo "init this command? [alias/function/bin/'n']"
+      read answer
+      case "$answer" in
+        "a*")
+          echo "alias $1=''" >> "$bash_alias"
+          vim "$bash_alias" + G
+          ;;
+        "f*")
+          echo "$1 () { >> $bash_function"
+          echo "}" >> "$bash_function"
+          vim "$bash_function" + G
+          ;;
+        "b*")
+          if [ -e "$bindir/$1" ];then
+            echo "$1 is already exist in $bindir"
+          else
+            echo "#!/bin/bash" > "$bindir"/"$1"
+            echo "" >> "$bindir"/"$1"
+            vim "$bindir"/"$1" +2
+          fi
+          ;;
+      esac
+  esac
 }
