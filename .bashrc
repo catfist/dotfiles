@@ -1,8 +1,5 @@
 #!/bin/bash
 # integration
-if [ -f "$(ghq root)/github.com/b4b4r07/favdir/favdir.sh" ]; then
-  . "$(ghq root)/github.com/b4b4r07/favdir/favdir.sh"
-fi
 if [ -f "$(brew --prefix)"/etc/profile.d/z.sh ]; then
   . "$(brew --prefix)"/etc/profile.d/z.sh
 fi
@@ -16,8 +13,7 @@ fi
 
 # TITLE / PROMPT
 export PROMPT_COMMAND='echo -ne "\033]0;${PWD/$HOME/~}\007"'
-# PS1="\h@\u:\W\$(__git_ps1) \n\$ "
-PS1="[\w]\$(__git_ps1) $(inputsource|sed 's/.*\.//')\n\$ "
+PS1="[\w]\$(__git_ps1) \$(inputsource|sed 's/.*\.//')\n\$ "
 
 # read config files
 #. $bash_conf/*
