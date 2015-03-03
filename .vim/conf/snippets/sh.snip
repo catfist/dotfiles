@@ -1,5 +1,5 @@
 snippet bash
-abbr shebang
+abbr #!/bin/bash
 options head
 alias sb
 	#!/bin/bash
@@ -10,52 +10,66 @@ abbr bash alias
 options head
   alias ${1:#:name}='${0:TARGET}'
 
-sh
-snippet getoptfunction
+snippet getoptsfunction
 abbr build-in getopt (for bash function)
-alias gofunc
+alias gosf
 option head
   OPTIND_OLD="$OPTIND"
   OPTIND=1
   usage () {
-    echo "Usage: ${0}"
-  return
+    echo "Usage: " 1>&2
   }
   while getopts ${1:h} OPT
   do
-    case $OPT in
-      ${2:#:OPT}) ${3:#:process} ;;
-      h) usage ;;
-      ?) usage ;;
+    case "$OPT" in
+      ${2:#:OPT})
+        ${0:#:process}
+        ;;
+      h)
+        usage
+        return 0
+        ;;
+      ?)
+        echo "ERROR: Undifined option." 1>&2
+        usage
+        return 1
+        ;;
     esac
   done
-  shift $(($OPTIND - 1))
+  shift $((OPTIND - 1))
   OPTIND="$OPTIND_OLD"
-  ${0}
 }
-snippet getoptscript
+snippet getoptsscript
 abbr while getopt (for script files)
-alias goscript
+alias goss
 option head
   usage () {
-    echo "Usage: ${0}"
-    return
+    echo "Usage: $0" 1>&2
   }
   while getopts ${1:h} OPT
   do
-    case $OPT in
-      ${2:#:OPT}) ${3:#:process} ;;
-      h) usage ;;
-      ?) usage ;;
+    case "$OPT" in
+      ${2:#:OPT})
+        ${0:#:process}
+        ;;
+      h)
+        usage
+        exit 0
+        ;;
+      ?)
+        echo "ERROR: Undifined option." 1>&2
+        usage
+        exit 1
+        ;;
     esac
   done
-  shift $(($OPTIND - 1))
+  shift $((OPTIND - 1))
 
-snippet getoptsfuncrion
+snippet getoptfuncrion
 abbr long opt, post opt (function)
-alias gosf
+alias gof
   usage () {
-    echo "Usage: "
+    echo "Usage: " 1>&2
     return
   }
   declare -i argc=0
@@ -63,27 +77,27 @@ alias gosf
 
   while (( $# > 0 ))
   do
-      case "\$1" in
-          -*)
-              if [[ "\$1" =~ '${1:#:option}' ]]; then
-                  pflag='-p'
-              fi
-              shift${2:# 2}
-              ${0}
-              ;;
-          *)
-              ((++argc))
-              argv=("${argv[@]}" "$1")
-              shift
-              ;;
-      esac
+    case "\$1" in
+      -*)
+        if [[ "\$1" =~ '${1:#:option}' ]]; then
+          pflag='-p'
+        fi
+        shift${2:# 2}
+        ${0}
+        ;;
+      *)
+        ((++argc))
+        argv=("${argv[@]}" "$1")
+        shift
+        ;;
+    esac
   done
   
-snippet getoptsscript
+snippet getoptscript
 abbr long opt, post opt (script)
-alias goss
+alias gos
   usage () {
-    echo "Usage: "
+    echo "Usage: " 1>&2
     exit 1
   }
   declare -i argc=0
@@ -91,27 +105,45 @@ alias goss
 
   while (( $# > 0 ))
   do
-      case "\$1" in
-          -*)
-              if [[ "\$1" =~ '${1:#:option}' ]]; then
-                  pflag='-p'
-              fi
-              shift${2:# 2}
-              ${0}
-              ;;
-          *)
-              ((++argc))
-              argv=("${argv[@]}" "$1")
-              shift
-              ;;
-      esac
+    case "\$1" in
+      -*)
+        if [[ "\$1" =~ '${1:#:option}' ]]; then
+          pflag='-p'
+        fi
+        shift${2:# 2}
+        ${0}
+        ;;
+      *)
+        ((++argc))
+        argv=("${argv[@]}" "$1")
+        shift
+        ;;
+    esac
   done
-  
 
 snippet     whileread
 abbr        while read (array)
-options     head
   while read ${1:array}
   do
-    ${0:<`3:#:TARGET`>}
+    ${0:}
   done
+
+snippet     12
+abbr        1>&2 #redir stdout to error stdout
+  1>&2
+
+snippet     12n
+abbr        >& /dev/null
+  >& /dev/null
+
+snippet     echo2
+abbr        echo ${0:#:text} 1>&2
+alias        e2
+  echo "${0:#:text}" 1>&2
+
+snippet     );;
+abbr        [char])*;;
+options     head
+  ${1:char})
+    
+    ;;
