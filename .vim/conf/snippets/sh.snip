@@ -5,13 +5,22 @@ alias sb
 	#!/bin/bash
 	${0:TARGET}
 
+snippet bashd
+abbr #!/bin/bash;#@(#)
+options head
+alias sbd
+	#!/bin/bash
+	# @(#)${1:#:Descriptions}
+	# @(#)Usage: \$0 ${2:#:Options}
+	${0:TARGET}
+
 snippet als
 abbr bash alias
 options head
   alias ${1:#:name}='${0:TARGET}'
 
 snippet getoptsfunction
-abbr build-in getopt (for bash function)
+abbr build-in getopts (for bash function)
 alias gosf
 option head
   OPTIND_OLD="$OPTIND"
@@ -39,12 +48,13 @@ option head
   shift $((OPTIND - 1))
   OPTIND="$OPTIND_OLD"
 }
+
 snippet getoptsscript
-abbr while getopt (for script files)
+abbr build-in getopts (for script files)
 alias goss
 option head
-  usage () {
-    echo "Usage: $0" 1>&2
+  Usage () {
+    what "\$0" | sed "s/\\$0/$SCRIPTNAME/" 1>&2
   }
   while getopts ${1:h} OPT
   do
@@ -53,12 +63,12 @@ option head
         ${0:#:process}
         ;;
       h)
-        usage
+        Usage
         exit 0
         ;;
       ?)
-        echo "ERROR: Undifined option." 1>&2
-        usage
+        echo "$SCRIPTNAME: ERROR - Undifined option." 1>&2
+        Usage
         exit 1
         ;;
     esac
@@ -87,7 +97,7 @@ alias gof
         ;;
       *)
         ((++argc))
-        argv=("${argv[@]}" "$1")
+        argv=("${argv[@]}" "\$1")
         shift
         ;;
     esac
@@ -96,9 +106,8 @@ alias gof
 snippet getoptscript
 abbr long opt, post opt (script)
 alias gos
-  usage () {
-    echo "Usage: " 1>&2
-    exit 1
+  Usage () {
+    what "$0" | sed "s/\$0/$SCRIPTNAME/" 1>&2
   }
   declare -i argc=0
   declare -a argv=()
@@ -115,7 +124,7 @@ alias gos
         ;;
       *)
         ((++argc))
-        argv=("${argv[@]}" "$1")
+        argv=("${argv[@]}" "\$1")
         shift
         ;;
     esac
@@ -143,7 +152,10 @@ alias        e2
 
 snippet     );;
 abbr        [char])*;;
-options     head
-  ${1:char})
-    
+  ${1:#:char})
+  ${0:TARGET}
     ;;
+
+snippet     #@
+abbr        # @(#) (Descriptions of script)
+  # @(#)

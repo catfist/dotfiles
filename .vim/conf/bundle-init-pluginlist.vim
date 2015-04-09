@@ -1,7 +1,9 @@
 " core
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'haya14busa/incsearch.vim'
+NeoBundle 'Shougo/vimproc'
 " File management
 " NeoBundle 'allenhwkim/nextfile.vim'
 " NeoBundle 'tyru/nextfile.vim'
@@ -51,3 +53,14 @@ NeoBundle 'tyru/caw.vim'
 " NeoBundle 'thinca/vim-ref'
 " NeoBundle 'mojako/ref-sources.vim'
 NeoBundle 'vim-scripts/applescript.vim'
+NeoBundle 'elzr/vim-json'
+NeoBundle 'vim-scripts/bash-support.vim'
+NeoBundle 'lambdalisue/vim-gista'
+" neobundle.vim (Lazy)
+NeoBundleLazy 'lambdalisue/vim-gista', {
+    \ 'autoload': {
+    \    'commands': ['Gista'],
+    \    'mappings': '<Plug>(gista-',
+    \    'unite_sources': 'gista',
+    \}}
+NeoBundle 'tyru/open-browser.vim'

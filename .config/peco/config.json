@@ -1,0 +1,28 @@
+{
+  "Action": {
+    "foo.SelectUp": [
+      "peco.ToggleSelection",
+      "peco.SelectUp"
+    ],
+    "foo.SelectUp": [
+      "peco.ToggleSelection",
+      "peco.SelectDown"
+    ]
+  },
+  "Keymap": {
+    "C-u": "peco.ScrollPageUp",
+    "C-d": "peco.ScrollPageDown",
+    "C-k": "peco.SelectUp",
+    "C-j": "peco.SelectDown",
+    "C-c": "peco.Cancel",
+    "C-_": "peco.ToggleSelectionAndSelectNext"
+  },
+  "Style": {
+    "Basic": ["on_default", "default"],
+    "SavedSelection": ["bold", "on_yellow", "white"],
+    "Selected": ["underline", "on_default", "default"],
+    "Query": ["yellow", "on_default"],
+    "Matched": ["red", "on_default"]
+  },
+  "Prompt": "[select]"
+}
