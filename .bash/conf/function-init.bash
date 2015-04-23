@@ -72,7 +72,7 @@ ec () { #edit shell commands
   case "$(type -t "$1")" in
     "function" )
       if [ "$pflag" = 1 ]; then
-        type "$1" | sed 1d | tee >(pbcopy)
+        type "$1" | sed -e 1d -e 's/;$//g' | tee >(pbcopy)
         return 0
       fi
       if [ "$dflag" = 0 ]; then
@@ -175,7 +175,7 @@ ccmd () {
 ## git
 # gcm () {
 #   if [ -z "$1" ];then
-#     echo "Imput commit message"
+#     echo "Imput commit message" 1>&2
 #     read message
 #   else
 #     message="$1"
@@ -307,12 +307,6 @@ qltext () { # qlmanage / quick look text
 qlimg () { # qlmanage / quick look image
   qlmanage -p "$1" >& /dev/null
 }
-kobitocreate () {
-  cd ~/Dropbox/kobito
-  touch "$1".md
-  kobito link "$1".md
-  open -a "FoldingText" "$1".md
-}
 ebash () { #edit bash config files
   FILE="$({
   find ~ \( -type f -o -type l \) \( -name '*.bash' -o -name '.bash*' ! -name '.bash_history' \) -mindepth 1 -maxdepth 1
@@ -326,13 +320,18 @@ fi
 pcd () { #change working directory with piped stdin
   if [ ! -p /dev/stdin ]; then
     if [ $# -ge 1 ]; then
-      cd "$1"
+      if [ -d "$1" ];then
+        cd "$1"
+      fi
+      if [ -f "$1" ];then
+        cd "$(dirname "$1")"
+      fi
       shift
       if [ $# -ge 1 ]; then
-        echo "Too many arguments. After second arguments are not processed."
+        echo "Too many arguments. After second arguments are not processed." 1>&2
       fi
     else
-      echo "ERROR: No stdin or argument"
+      echo "ERROR: No stdin or argument" 1>&2
       return 1
     fi
   else
