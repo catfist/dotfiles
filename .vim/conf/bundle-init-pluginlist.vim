@@ -13,6 +13,9 @@ NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'itchyny/vim-external'
+NeoBundle 'castor4bit/inside-motion.vim'
+" NeoBundle 'jiangmiao/auto-pairs'
+NeoBundle 'tyru/caw.vim'
 " Appearances
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'Yggdroot/indentLine'
@@ -48,13 +51,11 @@ NeoBundle 'moznion/hateblo.vim'
 " NeoBundle 'yuratomo/gmail.vim',
 "           \ { 'depends': 'Shougo/vimproc' }
 " other
-" NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'tyru/caw.vim'
 " NeoBundle 'thinca/vim-ref'
 " NeoBundle 'mojako/ref-sources.vim'
 NeoBundle 'vim-scripts/applescript.vim'
 NeoBundle 'elzr/vim-json'
-NeoBundle 'vim-scripts/bash-support.vim'
+" NeoBundle 'vim-scripts/bash-support.vim'
 NeoBundle 'lambdalisue/vim-gista'
 " neobundle.vim (Lazy)
 NeoBundleLazy 'lambdalisue/vim-gista', {

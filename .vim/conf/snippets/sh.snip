@@ -1,21 +1,25 @@
 snippet bash
 abbr #!/bin/bash
 options head
-alias sb
+alias sb shebang
 	#!/bin/bash
 	${0:TARGET}
 
-snippet bashd
-abbr #!/bin/bash;#@(#)
-options head
-alias sbd
+snippet description
+abbr #@(#)
+alias desc mark #@
+	# @(#)${0:#:Descriptions}
+
+snippet     header
+abbr        shebang & description
+options     head
 	#!/bin/bash
-	# @(#)${1:#:Descriptions}
-	# @(#)Usage: \$0 ${2:#:Options}
+	# @(#)Usage: \$0 ${1:#:Options}
+	readonly SCRIPTNAME="$(basename "$0")"
 	${0:TARGET}
 
-snippet als
-abbr bash alias
+snippet alias
+abbr bash als
 options head
   alias ${1:#:name}='${0:TARGET}'
 
@@ -25,28 +29,29 @@ alias gosf
 option head
   OPTIND_OLD="$OPTIND"
   OPTIND=1
-  usage () {
-    echo "Usage: " 1>&2
+  Usage () {
+    echo "Usage: \$FUNCNAME: ${1}" 1>&2
   }
-  while getopts ${1:h} OPT
+  while getopts ${2:h} OPT
   do
     case "$OPT" in
-      ${2:#:OPT})
+      ${3:#:OPT})
         ${0:#:process}
         ;;
       h)
-        usage
+        Usage
         return 0
         ;;
       ?)
         echo "ERROR: Undifined option." 1>&2
-        usage
+        Usage
         return 1
         ;;
     esac
   done
   shift $((OPTIND - 1))
   OPTIND="$OPTIND_OLD"
+	unset Usage
 }
 
 snippet getoptsscript
@@ -78,13 +83,12 @@ option head
 snippet getoptfuncrion
 abbr long opt, post opt (function)
 alias gof
-  usage () {
+  Usage () {
     echo "Usage: " 1>&2
     return
   }
   declare -i argc=0
   declare -a argv=()
-
   while (( $# > 0 ))
   do
     case "\$1" in
@@ -102,6 +106,7 @@ alias gof
         ;;
     esac
   done
+	unset Usage
   
 snippet getoptscript
 abbr long opt, post opt (script)
@@ -111,7 +116,6 @@ alias gos
   }
   declare -i argc=0
   declare -a argv=()
-
   while (( $# > 0 ))
   do
     case "\$1" in
@@ -145,6 +149,10 @@ snippet     12n
 abbr        >& /dev/null
   >& /dev/null
 
+snippet     2n
+abbr        2> /dev/null
+  2> /dev/null
+
 snippet     echo2
 abbr        echo ${0:#:text} 1>&2
 alias        e2
@@ -155,7 +163,3 @@ abbr        [char])*;;
   ${1:#:char})
   ${0:TARGET}
     ;;
-
-snippet     #@
-abbr        # @(#) (Descriptions of script)
-  # @(#)
