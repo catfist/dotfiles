@@ -1,0 +1,8 @@
+goenv:
+
+pyenv:
+  system
+* 2.7.9 (set by /Users/catfist/.anyenv/envs/pyenv/version)
+rbenv:
+  system
+* 2.2.2 (set by /Users/catfist/.anyenv/envs/rbenv/version)
