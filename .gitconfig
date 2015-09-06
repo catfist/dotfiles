@@ -1,2 +1,34 @@
 [core]
-  excludesfile = ~/.gitignore_global
+	precomposeunicode = true
+	quotepath = false
+	excludesFile = ~/.gitignore_global
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[user]
+	name = catfist
+  email = catfist.m@gmail.com
+[push]
+	default = simple
+[alias]
+  co = checkout
+  cm = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  alias = "!f() { git config --get-regexp alias | gsed -e 's/^alias\\.//' -e 's/ /\t/'; }; f"
+  user = "!f() { git config --get-regexp user | gsed -e 's/^user\\.//' -e 's/ /\t/'; }; f"
+[ghq]
+	root = ~/ghq
+# Invoke as `ghq import starred motemen`
+# [ghq "import"]
+#   starred = github-list-starred
+[url "git@github.com:"]
+  pushInsteadOf = https://github.com/
+[color]
+  ui = auto
+  status = auto
+  diff = auto
+[credential]
+	helper = osxkeychain
