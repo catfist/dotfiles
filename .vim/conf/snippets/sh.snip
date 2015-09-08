@@ -6,7 +6,7 @@ alias sb shebang
 	${0:TARGET}
 
 snippet description
-abbr #@(#)
+abbr # @(#)
 alias desc mark #@
 	# @(#)${0:#:Descriptions}
 
@@ -27,10 +27,11 @@ snippet getoptsfunction
 abbr build-in getopts (for bash function)
 alias gosf
 option head
+  local SCRIPTNAME="$FUNCNAME"
   OPTIND_OLD="$OPTIND"
   OPTIND=1
   Usage () {
-    echo "Usage: \$FUNCNAME: ${1}" 1>&2
+    echo "Usage: \$SCRIPTNAME ${1}" 1>&2
   }
   while getopts ${2:h} OPT
   do
@@ -43,23 +44,22 @@ option head
         return 0
         ;;
       ?)
-        echo "ERROR: Undifined option." 1>&2
+        echo "[ERROR] Undifined option." 1>&2
         Usage
         return 1
         ;;
     esac
   done
-  shift $((OPTIND - 1))
+  shift "$((OPTIND - 1))"
   OPTIND="$OPTIND_OLD"
 	unset Usage
-}
 
 snippet getoptsscript
 abbr build-in getopts (for script files)
 alias goss
 option head
   Usage () {
-    what "\$0" | sed "s/\\$0/$SCRIPTNAME/" 1>&2
+    what "\$0" | sed "s/\\$0/\$SCRIPTNAME/" 1>&2
   }
   while getopts ${1:h} OPT
   do
@@ -72,13 +72,12 @@ option head
         exit 0
         ;;
       ?)
-        echo "$SCRIPTNAME: ERROR - Undifined option." 1>&2
         Usage
         exit 1
         ;;
     esac
   done
-  shift $((OPTIND - 1))
+  shift "$((OPTIND - 1))"
 
 snippet getoptfuncrion
 abbr long opt, post opt (function)
