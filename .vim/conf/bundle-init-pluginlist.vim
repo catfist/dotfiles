@@ -65,3 +65,4 @@ NeoBundleLazy 'lambdalisue/vim-gista', {
     \    'unite_sources': 'gista',
     \}}
 NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'davidoc/taskpaper.vim'

@@ -13,12 +13,16 @@
 	default = simple
 [alias]
   co = checkout
-  cm = commit
+  cm = "commit -v"
   st = status
   br = branch
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
   alias = "!f() { git config --get-regexp alias | gsed -e 's/^alias\\.//' -e 's/ /\t/'; }; f"
   user = "!f() { git config --get-regexp user | gsed -e 's/^user\\.//' -e 's/ /\t/'; }; f"
+	ca = "commit -av"
+	cf = config
+	ac = "! git add \"$*\"; git commit -v"
+	a = add
 [ghq]
 	root = ~/ghq
 # Invoke as `ghq import starred motemen`
@@ -32,3 +36,5 @@
   diff = auto
 [credential]
 	helper = osxkeychain
+[commit]
+	template = /Users/catfist/.commit.template

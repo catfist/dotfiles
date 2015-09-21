@@ -1,4 +1,8 @@
 #!/bin/bash
+# bash
+export bash_alias="$bash_conf/alias-init.bash"
+export bash_function="$bash_conf/function-init.bash"
+export bash_variable="$bash_conf/variable-init.bash"
 # vim
 export vim_conf=~/.vim/conf
 export vim_bundle=~/.vim/bundle

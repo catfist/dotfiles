@@ -50,10 +50,15 @@ set showmatch "括弧の対応をハイライト
 set matchtime=1
 " set nostartofline "カッコを閉じたとき対応するカッコに一時的に移動
 let loaded_matchparen = 1 " 対応する括弧の上にカーソルを表示しない
+
+" ----other---
 "set paste "ターミナル上からの張り付けを許可
-
-
 set ambiwidth=double "Unicodeで行末が変になる問題を解決
+
+" ---Mac 用設定---
+if has('mac')
+  " set macmeta " optキーをmetaキーとして利用 " not working
+endif
 
 "---appearance---
 set display=lastline "長い行を全て表示

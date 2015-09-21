@@ -1,3 +1,11 @@
+# dotfiles
+
+## install
+
+```bash
+$ curl -L raw.github.com/catfist/dotfiles/master/bin/initialize.sh | bash
+```
+
 ## list
 * git
 * bash
