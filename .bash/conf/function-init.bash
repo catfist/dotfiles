@@ -147,13 +147,14 @@ wcd () { # wrapper of cd:with piped stdin/find directory
   fi
 }
 tps () { # toggle PS1 (shell prompt)
-  local defaultPS1=$(sed -n 's/^ *export PS1="\(.*\)"/\1/p' ~/.bashrc)
+  local defaultPS1=$(grep -E '^ *(export )?PS1=' ~/.bashrc)
   local subPS1="\$ "
-  if [ "$PS1" = "$subPS1" ];then
-    PS1=$defaultPS1
-  else
+  if [ "$PS1" = "$defaultPS1" ];then
     PS1=$subPS1
+  else
+    PS1=$defaultPS1
   fi
+  : # null: refresh prompt.
 }
 fcd () {
   cd "$(find . -maxdepth 5 -mindepth 1 -type d | grepeco -p "Select dir to cd:" "$1")"
@@ -199,4 +200,7 @@ mvf () {
     tdir="$2"
   fi
   mkdir "$tdir" >& /dev/null && mv "$1" "$2"
+}
+where () {
+  ls -li "${PWD%/*}" | grep "${PWD##*/}" | awk '{print "inode :" $1 "\nlinked:" $3 "\nfrom  :" $10,$11,$12}'
 }
