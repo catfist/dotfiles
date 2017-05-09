@@ -8,33 +8,35 @@
 	smudge = git media smudge %f
 [user]
 	name = catfist
-  email = catfist.m@gmail.com
+	email = catfist.m@gmail.com
 [push]
 	default = simple
 [alias]
-  co = checkout
-  cm = "commit -v"
-  st = status
-  br = branch
-  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-  alias = "!f() { git config --get-regexp alias | gsed -e 's/^alias\\.//' -e 's/ /\t/'; }; f"
-  user = "!f() { git config --get-regexp user | gsed -e 's/^user\\.//' -e 's/ /\t/'; }; f"
+	co = checkout
+	cm = "commit -v"
+	st = status
+	br = branch
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	alias = "!f() { git config --get-regexp alias | gsed -e 's/^alias\\.//' -e 's/ /\t/'; }; f"
+	user = "!f() { git config --get-regexp user | gsed -e 's/^user\\.//' -e 's/ /\t/'; }; f"
 	ca = "commit -av"
 	cf = config
 	ac = "! git add \"$*\"; git commit -v"
 	a = add
+	cfg = config --global
+	aa = add -A
 [ghq]
 	root = ~/ghq
 # Invoke as `ghq import starred motemen`
 # [ghq "import"]
-#   starred = github-list-starred
+#		starred = github-list-starred
 [url "git@github.com:"]
-  pushInsteadOf = https://github.com/
+	pushInsteadOf = https://github.com/
 [color]
-  ui = auto
-  status = auto
-  diff = auto
+	ui = auto
+	status = auto
+	diff = auto
 [credential]
 	helper = osxkeychain
 [commit]
-	template = /Users/catfist/.commit.template
+	template = ~/.commit.template
